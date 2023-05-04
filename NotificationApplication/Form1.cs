@@ -59,6 +59,8 @@ namespace NotificationApplication
 
             txt_girisSife.Text = girisno;
 
+           
+
             LiveData();
 
 
@@ -107,7 +109,8 @@ namespace NotificationApplication
 
                     }
                 }
-                }
+                this.Hide();
+            }
            
 
 
