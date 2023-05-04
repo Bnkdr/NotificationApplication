@@ -35,8 +35,9 @@ namespace NotificationApplication
 
 
         Çağrılan çağrılan = new Çağrılan();
+        Çağrılan çağrılan2;
 
-        List<Çağrılan> çağrılanlar = new List<Çağrılan>();
+       // List<Çağrılan> çağrılanlar = new List<Çağrılan>();
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -58,59 +59,64 @@ namespace NotificationApplication
 
             txt_girisSife.Text = girisno;
 
-                FirebaseResponse res = client.Get(@"CurrentCall");
-                Dictionary<string, Çağrılan> data = JsonConvert.DeserializeObject<Dictionary<string, Çağrılan>>(res.Body.ToString());
-                çağrılanlar = new List<Çağrılan>(data.Values);
-            
+            LiveData();
 
-            string çağrılanNo = null;
-            string isimSoyisim = null;
-            string çağıranİdareciGorev = null;
-            string çağıranİdareciİsim = null;
-            string çağıranİdareciSoyisim = null;
-            string acıklama = null;
-
-            foreach(Çağrılan çağrılanl in çağrılanlar)
-            {
-               if( çağrılanl.çağrılanidarecino==çağrılan.getÇağrılanNo())
-                {
-                    çağrılanNo = çağrılanl.çağrılanidarecino;
-                    isimSoyisim = çağrılanl.idareciisimsoyisim;
-                    çağıranİdareciGorev = çağrılanl.çağıranidarecigorev;
-                    çağıranİdareciİsim = çağrılanl.çağıranidareciisim;
-                    çağıranİdareciSoyisim = çağrılanl.çağıranidarecisoyisim;
-                    acıklama = çağrılanl.acıklama;
-                }
-
-            }
-
-            Çağrılan çağrılan2 = new Çağrılan(çağrılanNo,isimSoyisim, çağıranİdareciGorev, çağıranİdareciİsim, çağıranİdareciSoyisim, acıklama);
-
-            while(true)
-            {
-             
-                    if(çağrılanlar!=null)
-                {
-                    for(int i=1;i<=5;i++)
-                    {
-                        if(çağrılan2.çağrılanidarecino==i.ToString())
-                        {
-                            MessageBox.Show($"{çağrılan2.çağıranidareciisim+ çağrılan2.çağıranidarecisoyisim + "(" + çağrılan2.çağıranidarecigorev + ")"}:{çağrılan2.acıklama}");
-                            client.Delete("CurrentCall/" + çağrılan2.çağrılanidarecino);
-                        }
-                        if(Convert.ToInt32(çağrılan2.çağrılanidarecino)>5)
-                        {
-                            MessageBox.Show($"{çağrılan2.çağıranidareciisim + çağrılan2.çağıranidarecisoyisim + "(" + çağrılan2.çağıranidarecigorev + ")"}, {çağrılan2.idareciisimsoyisim} adlı kişiyi çağırıyor: {çağrılan2.acıklama}");
-                            client.Delete("CurrentCall/" + çağrılan2.çağrılanidarecino);
-                        }
-                    }
 
                    
-                }
                 
-            }
+                
+            
 
         }
+
+        async void LiveData()
+    {
+            while(true)
+            {
+                FirebaseResponse res2 = client.Get($"CurrentCall/{çağrılan.getÇağrılanNo()}"  );
+                Dictionary<string, string> data2 = JsonConvert.DeserializeObject<Dictionary<string, string>>(res2.Body.ToString());
+                if (data2 != null)
+                {
+                    FirebaseResponse res = await client.GetAsync($"CurrentCall/{çağrılan.getÇağrılanNo()}/");
+                    Dictionary<string, string> data = JsonConvert.DeserializeObject<Dictionary<string, string>>(res.Body.ToString());
+
+
+                    if (data.ElementAt(2).Value == çağrılan.getÇağrılanNo())
+                    {
+                        çağrılan2 = new Çağrılan(data.ElementAt(2).Value, data.ElementAt(1).Value, data.ElementAt(3).Value, data.ElementAt(4).Value, data.ElementAt(5).Value, data.ElementAt(0).Value);
+
+                        if (data.ElementAt(2).Value != null)
+                        {
+                            for (int i = 1; i <= 5; i++)
+                            {
+                                if (çağrılan2.çağrılanidarecino == i.ToString())
+                                {
+                                    MessageBox.Show($"{çağrılan2.çağıranidareciisim + çağrılan2.çağıranidarecisoyisim + "(" + çağrılan2.çağıranidarecigorev + ")"}: {çağrılan2.acıklama}");
+                                    client.Delete("CurrentCall/" + çağrılan2.çağrılanidarecino);
+                                    break;
+                                }
+
+                            }
+                            if (Convert.ToInt32(çağrılan2.çağrılanidarecino) > 5)
+                            {
+                                MessageBox.Show($"{çağrılan2.çağıranidareciisim + çağrılan2.çağıranidarecisoyisim + "(" + çağrılan2.çağıranidarecigorev + ")"}, {çağrılan2.idareciisimsoyisim} adlı kişiyi çağırıyor: {çağrılan2.acıklama}");
+                                client.Delete("CurrentCall/" + çağrılan2.çağrılanidarecino);
+
+                            }
+                        }
+
+                    }
+                }
+                }
+           
+
+
+
+            
+
+
+
+    }
 
         private void txt_girisSife_TextChanged(object sender, EventArgs e)
         {
