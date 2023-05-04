@@ -53,7 +53,7 @@ namespace NotificationApplication
             //  this.Hide();
 
 
-            StreamReader sr = new StreamReader("C:\\Users\\LENOVO\\OneDrive\\Masaüstü\\test.txt");
+            StreamReader sr = new StreamReader("C:\\Users\\Public\\test.txt");
 
             string girisno = sr.ReadLine();
 
