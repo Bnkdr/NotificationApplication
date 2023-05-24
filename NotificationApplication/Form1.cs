@@ -36,6 +36,7 @@ namespace NotificationApplication
 
         Çağrılan çağrılan = new Çağrılan();
         Çağrılan çağrılan2;
+        Geridönüt geridönüt = new Geridönüt();
 
        // List<Çağrılan> çağrılanlar = new List<Çağrılan>();
         private void Form1_Load(object sender, EventArgs e)
@@ -93,7 +94,13 @@ namespace NotificationApplication
                             {
                                 if (çağrılan2.çağrılanidarecino == i.ToString())
                                 {
-                                    MessageBox.Show($"{çağrılan2.çağıranidareciisim + çağrılan2.çağıranidarecisoyisim + "(" + çağrılan2.çağıranidarecigorev + ")"}: {çağrılan2.acıklama}");
+                                    MessageBox.Show($"{çağrılan2.çağıranidareciisim + çağrılan2.çağıranidarecisoyisim + "(" + çağrılan2.çağıranidarecigorev + ")"}: {çağrılan2.acıklama}","Çağrı");
+                                    MessageBox.Show("Geridönüt vermek istiyor musunuz?","Geridönüt", MessageBoxButtons.OKCancel);
+                                    bool kontrol = Convert.ToBoolean(MessageBoxButtons.OKCancel);
+                                    if(kontrol==true)
+                                    {
+                                        geridönüt.Show();
+                                    }
                                     client.Delete("CurrentCall/" + çağrılan2.çağrılanidarecino);
                                     break;
                                 }
