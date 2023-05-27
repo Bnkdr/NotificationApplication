@@ -95,7 +95,7 @@ namespace NotificationApplication
                                 if (çağrılan2.çağrılanidarecino == i.ToString())
                                 {
                                     MessageBox.Show($"{çağrılan2.çağıranidareciisim + çağrılan2.çağıranidarecisoyisim + "(" + çağrılan2.çağıranidarecigorev + ")"}: {çağrılan2.acıklama}","Çağrı");
-                                    MessageBox.Show("Geridönüt vermek istiyor musunuz?","Geridönüt", MessageBoxButtons.OKCancel);
+                                    MessageBox.Show("Geri dönüt vermek istiyor musunuz?","Geri dönüt", MessageBoxButtons.OKCancel);
                                     bool kontrol = Convert.ToBoolean(MessageBoxButtons.OKCancel);
                                     if(kontrol==true)
                                     {
