@@ -102,6 +102,7 @@ namespace NotificationApplication
                                 if (çağrılan2.çağrılanidarecino == i.ToString())
                                 {
                                     MessageBox.Show($"{çağrılan2.çağıranidarecisoyisim} {çağrılan2.çağıranidareciisim + "(" + çağrılan2.çağıranidarecigorev + ")"}: {çağrılan2.acıklama}","Çağrı");
+                                    await client.SetAsync($"Feedback/{girisno}", çağrılan2.idareciisimsoyisim);
                                     client.Delete("CurrentCall/" + çağrılan2.çağrılanidarecino);
                                     break;
                                 }
@@ -110,6 +111,7 @@ namespace NotificationApplication
                             if (Convert.ToInt32(çağrılan2.çağrılanidarecino) > 6 &&çağrılan2.çağrılanidarecino==girisno)
                             {
                                 MessageBox.Show($"{çağrılan2.çağıranidareciisim} { çağrılan2.çağıranidarecisoyisim + "(" + çağrılan2.çağıranidarecigorev + ")"}, {çağrılan2.idareciisimsoyisim} adlı kişiyi çağırıyor: {çağrılan2.acıklama}");
+                                await client.SetAsync($"Feedback/{girisno}", çağrılan2.idareciisimsoyisim);
                                 client.Delete("CurrentCall/" + çağrılan2.çağrılanidarecino);
 
                             }
